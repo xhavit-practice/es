@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .level1 {
+                width: 300px;
+                height: 300px;
+                background-color: #ff0000;
+            }
+
+            .level2 {
+                width: 200px;
+                height: 200px;
+                background-color: #00ff00;
+            }
+
+            .level3 {
+                width: 100px;
+                height: 100px;
+                background-color: #0000ff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="level1">
+            <div class="level2">
+                <div class="level3"></div>
+            </div>
+        </div>
+
+        <a class="link" href="http://www.baidu.com">链接</a>
+
+        <script>
+            const q = document.querySelector.bind(document);
+
+            window.addEventListener('click', function (e) {
+                console.log('click window propagation');
+            });
+
+            window.addEventListener(
+                'click',
+                function (e) {
+                    console.log('click window capture');
+                },
+                true
+            );
+
+            document.addEventListener('click', function (e) {
+                console.log('click document propagation');
+            });
+
+            document.addEventListener(
+                'click',
+                function (e) {
+                    console.log('click document capture');
+                },
+                true
+            );
+
+            q('.level1').addEventListener('click', function (e) {
+                console.log('click level1 propagation');
+            });
+
+            q('.level1').addEventListener(
+                'click',
+                function (e) {
+                    console.log('click level1 capture');
+                },
+                true
+            );
+
+            q('.level2').addEventListener('click', function (e) {
+                console.log('click level2 propagation');
+            });
+
+            q('.level2').addEventListener(
+                'click',
+                function (e) {
+                    console.log('click level2 capture');
+                },
+                true
+            );
+
+            q('.level3').addEventListener('click', function (e) {
+                console.log('click level3 propagation');
+            });
+
+            q('.level3').addEventListener(
+                'click',
+                function (e) {
+                    console.log('click level3 capture');
+                },
+                true
+            );
+
+            q('.link').addEventListener(
+                'click',
+                function (e) {
+                    e.preventDefault();
+                    alert('333');
+                },
+                {
+                    capture: false,
+                    once: true,
+                    passive: false,
+                }
+            );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .box {
+                background-color: #ff0000;
+                width: 200px;
+                height: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box"></div>
+        <button class="btn">move</button>
+
+        <script>
+            const query = document.querySelector.bind(document);
+            const box = query('.box');
+            const btn = query('.btn');
+
+            btn.addEventListener('click', function () {
+                console.log('333');
+                box.style.transition = 'none';
+                box.style.transform = 'translateX(1000px)';
+
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        box.style.transition = 'transform 1s ease-in-out';
+                        box.style.transform = 'translateX(500px)';
+                    });
+                });
+
+                // setTimeout(function () {
+                //     box.style.transition = 'transform 1s ease-in-out';
+                //     box.style.transform = 'translateX(500px)';
+                // }, 100);
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .box1 {
+                background-color: #ff0000;
+                width: 200px;
+                height: 200px;
+                position: relative;
+                left: 3px;
+            }
+
+            .box2 {
+                background-color: #0000ff;
+                width: 200px;
+                height: 200px;
+                position: relative;
+                left: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box1"></div>
+        <div class="box2"></div>
+
+        <script>
+            function moveFactory(elem) {
+                const style = window.getComputedStyle(elem, null);
+                let isMoveRight = true;
+
+                return function moveElemForwardOnePixel() {
+                    const left = parseInt(style.left, 10);
+                    let step = 0;
+
+                    if (left >= 300) {
+                        isMoveRight = false;
+                    } else if (left <= 0) {
+                        isMoveRight = true;
+                    }
+
+                    step = isMoveRight ? 1 : -1;
+
+                    elem.style.left = `${left + step}px`;
+                };
+            }
+
+            const moveBox1 = moveFactory(document.querySelector('.box1'));
+            const moveBox2 = moveFactory(document.querySelector('.box2'));
+
+            function animateBox1() {
+                moveBox1();
+                requestAnimationFrame(animateBox1);
+            }
+
+            function animateBox2() {
+                moveBox2();
+                setTimeout(animateBox2, 1000 / 120);
+            }
+
+            animateBox1();
+            animateBox2();
+        </script>
+    </body>
+</html>

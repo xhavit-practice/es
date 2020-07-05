@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <button id="do">Do long calc!</button>
+        <div id="status"></div>
+        <div id="result"></div>
+
+        <script>
+            const query = document.querySelector.bind(document);
+
+            query('#do').addEventListener('click', function () {
+                query('#status').textContent = 'calculating....'; //此处会触发redraw事件的fired，但会放到队列里执行，直到long()执行完。
+
+                // without set timeout, user will never see "calculating...."
+                // long(); //执行长时间任务，阻塞
+
+                // with set timeout, works as expected
+                setTimeout(long, 0); //用定时器，大约50ms以后执行长时间任务，放入执行队列，但在redraw之后了，根据先进先出原则
+            });
+
+            function long() {
+                const start = new Date().getTime();
+
+                while (true) {
+                    if (new Date().getTime() > start + 2000) break;
+                }
+
+                query('#status').textContent = 'calclation done'; // has to be in here for this example. or else it will ALWAYS run instantly. This is the same as passing it a callback
+            }
+        </script>
+    </body>
+</html>
